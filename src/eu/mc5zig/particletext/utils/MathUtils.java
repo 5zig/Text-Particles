@@ -13,4 +13,8 @@ public class MathUtils {
 		return Math.round(f);
 	}
 
+	public static int getOffset(String string, int characterOff) {
+		return string.length() * characterOff;
+	}
+
 }

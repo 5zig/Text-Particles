@@ -33,18 +33,20 @@ public class CharacterManager {
 	}
 
 	public void draw(String string, Player player) {
+		final int defCharacterOff = 20;
 		Location loc = player.getLocation();
 		loc.setPitch(0.0f);
 		float yaw = loc.getYaw();
 		Vector vec = loc.getDirection();
-		vec.multiply(10);
+		vec.multiply(20);
 		loc.add(vec);
 		loc.add(0, 8, 0);
 
 		int f = MathUtils.getFByYaw(yaw);
-		System.out.println(f);
 
-		int xOff = 0;
+		int offset = MathUtils.getOffset(string, defCharacterOff);
+
+		int characterOff = -offset / 2;
 		for (int i = 0; i < string.length(); i++) {
 			char character = string.charAt(i);
 			int index = characters.indexOf(character);
@@ -53,11 +55,25 @@ public class CharacterManager {
 			for (int x = 0; x < sprite.getWidth(); x++) {
 				for (int y = 0; y < sprite.getHeight(); y++) {
 					int col = sprite.pixels[x + y * sprite.getWidth()];
-					Location l = new Location(loc.getWorld(), loc.getX() + x + xOff, loc.getY() - y, loc.getZ());
+					Location l = null;
+					switch (f) {
+					case 1:
+						l = new Location(loc.getWorld(), loc.getX(), loc.getY() - y, loc.getZ() - x - characterOff);
+						break;
+					case 2:
+						l = new Location(loc.getWorld(), loc.getX() + x + characterOff, loc.getY() - y, loc.getZ());
+						break;
+					case 3:
+						l = new Location(loc.getWorld(), loc.getX(), loc.getY() - y, loc.getZ() + x + characterOff);
+						break;
+					case 4:
+						l = new Location(loc.getWorld(), loc.getX() - x - characterOff, loc.getY() - y, loc.getZ());
+						break;
+					}
 					if (col != -1 && col != 0xffff00ff) l.getBlock().setType(Material.STONE);
 				}
 			}
-			xOff += 20;
+			characterOff += defCharacterOff;
 		}
 	}
 }
