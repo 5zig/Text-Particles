@@ -24,7 +24,16 @@ public class Main extends JavaPlugin {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("test")) {
-			characterManager.draw("ABCDEFGHIJKLMNOPQRSTUVWXYZ", (Player) sender);
+			if (sender instanceof Player) {
+				Player player = (Player) sender;
+				if (args.length > 0) {
+					StringBuffer sb = new StringBuffer();
+					for (int i = 0; i < args.length - 1; i++)
+						sb.append(args[i] + " ");
+					sb.append(args[args.length - 1]);
+					characterManager.draw(sb.toString(), player, 5);
+				}
+			}
 		}
 		return false;
 	}

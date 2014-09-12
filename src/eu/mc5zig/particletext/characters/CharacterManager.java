@@ -1,7 +1,7 @@
 package eu.mc5zig.particletext.characters;
 
+import org.bukkit.Effect;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -18,7 +18,11 @@ public class CharacterManager {
 	private String characters = "ABCDEFGHIJKLM" //
 			+ "NOPQRSTUVWXYZ" //
 			+ "abcdefghijklm" //
-			+ "nopqrstuvwxyz";
+			+ "nopqrstuvwxyz" //
+			+ "0123456789!\"§" //
+			+ "$%&/()[]{}=`´" //
+			+ "?ÜüÄäÖö@€\\#+" //
+			+ "*~'<>|-_.,;:^";
 
 	public CharacterManager(Main plugin) {
 		this.plugin = plugin;
@@ -32,17 +36,14 @@ public class CharacterManager {
 		this.sprites = sprites;
 	}
 
-	public void draw(String string, Player player) {
-		final int defCharacterOff = 20;
+	public void draw(String string, Player player, int distance) {
+		final int defCharacterOff = 2;
 		Location loc = player.getLocation();
 		loc.setPitch(0.0f);
-		float yaw = loc.getYaw();
 		Vector vec = loc.getDirection();
-		vec.multiply(20);
+		vec.multiply(distance);
 		loc.add(vec);
-		loc.add(0, 8, 0);
-
-		int f = MathUtils.getFByYaw(yaw);
+		loc.add(0, 1, 0);
 
 		int offset = MathUtils.getOffset(string, defCharacterOff);
 
@@ -50,27 +51,49 @@ public class CharacterManager {
 		for (int i = 0; i < string.length(); i++) {
 			char character = string.charAt(i);
 			int index = characters.indexOf(character);
-			if (index == -1) continue;
+			if (index == -1) {
+				characterOff += defCharacterOff;
+				continue;
+			}
 			Sprite sprite = sprites[index];
 			for (int x = 0; x < sprite.getWidth(); x++) {
 				for (int y = 0; y < sprite.getHeight(); y++) {
 					int col = sprite.pixels[x + y * sprite.getWidth()];
 					Location l = null;
+					float yaw = loc.getYaw();
+					int f = MathUtils.getFByYaw(yaw);
+
+					double xl = loc.getX();
+					double yl = loc.getY() - (double) y / 10.0;
+					double zl = loc.getZ();
+
+					double xp;
+					double zp;
 					switch (f) {
 					case 1:
-						l = new Location(loc.getWorld(), loc.getX(), loc.getY() - y, loc.getZ() - x - characterOff);
+						zp = (double) x / 10.0 + characterOff;
+						l = new Location(loc.getWorld(), xl, yl, zl - zp);
 						break;
 					case 2:
-						l = new Location(loc.getWorld(), loc.getX() + x + characterOff, loc.getY() - y, loc.getZ());
+						xp = (double) x / 10.0 + characterOff;
+						l = new Location(loc.getWorld(), xl + xp, yl, zl);
 						break;
 					case 3:
-						l = new Location(loc.getWorld(), loc.getX(), loc.getY() - y, loc.getZ() + x + characterOff);
+						zp = (double) x / 10.0 + characterOff;
+						l = new Location(loc.getWorld(), xl, yl, zl + zp);
 						break;
 					case 4:
-						l = new Location(loc.getWorld(), loc.getX() - x - characterOff, loc.getY() - y, loc.getZ());
+						xp = (double) x / 10.0 + characterOff;
+						l = new Location(loc.getWorld(), xl - xp, yl, zl);
+						break;
+					case 0:
+						xp = (double) x / 10.0 + characterOff;
+						l = new Location(loc.getWorld(), xl - xp, yl, zl);
 						break;
 					}
-					if (col != -1 && col != 0xffff00ff) l.getBlock().setType(Material.STONE);
+					if (col != -1 && col != 0xffff00ff) {
+						l.getWorld().playEffect(l, Effect.HEART, 0);
+					}
 				}
 			}
 			characterOff += defCharacterOff;
