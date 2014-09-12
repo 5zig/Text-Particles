@@ -23,8 +23,8 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("TEST")) {
-			characterManager.draw("test", (Player) sender);
+		if (cmd.getName().equalsIgnoreCase("test")) {
+			characterManager.draw("ABCDEFGHIJKLMNOPQRSTUVWXYZ", (Player) sender);
 		}
 		return false;
 	}

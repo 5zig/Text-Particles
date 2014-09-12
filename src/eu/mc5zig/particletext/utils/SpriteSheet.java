@@ -34,15 +34,17 @@ public class SpriteSheet {
 	}
 
 	public Sprite[] split(int size) {
-		Sprite[] res = new Sprite[width * height];
+		Sprite[] res = new Sprite[(width * height) / (size * size)];
 
 		int index = 0;
-		for (int x = 0; x < width; x += size) {
-			for (int y = 0; y < height; y += size) {
+		for (int y = 0; y < height; y += size) {
+			for (int x = 0; x < width; x += size) {
 				int[] pixels = new int[size * size];
-				for (int xx = 0; xx < size; xx++) {
-					for (int yy = 0; yy < size; yy++) {
-						pixels[xx + yy * size] = this.pixels[x + xx + (y + yy) * width];
+				for (int yy = 0; yy < size; yy++) {
+					int yo = y + yy;
+					for (int xx = 0; xx < size; xx++) {
+						int xo = x + xx;
+						pixels[xx + yy * size] = this.pixels[xo + yo * width];
 					}
 				}
 				res[index++] = new Sprite(pixels, size, size);
