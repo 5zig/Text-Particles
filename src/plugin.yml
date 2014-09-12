@@ -1,0 +1,6 @@
+name: TextParticles
+version: 1.0
+main: eu.mc5zig.particletext.Main
+author: 5zig
+commands:
+     test:

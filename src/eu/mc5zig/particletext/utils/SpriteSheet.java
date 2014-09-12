@@ -18,6 +18,7 @@ public class SpriteSheet {
 	}
 
 	private void load() {
+		System.out.println("Loading SpriteSheet in " + path);
 		try {
 			BufferedImage image = ImageIO.read(SpriteSheet.class.getResource(path));
 			this.width = image.getWidth();
@@ -25,8 +26,10 @@ public class SpriteSheet {
 			this.size = width > height ? width : height;
 			this.pixels = new int[width * height];
 			image.getRGB(0, 0, width, height, pixels, 0, size);
+			System.out.println("Loaded SpriteSheet in " + path);
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.err.println("Could not load SpriteSheet in " + path);
 		}
 	}
 

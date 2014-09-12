@@ -1,13 +1,11 @@
 package eu.mc5zig.particletext.characters;
 
-public abstract class Character {
+public class Character {
 
-	protected int[] matrix;
+	private int[] matrix;
 
-	public Character() {
-		matrix = new int[16 * 16];
+	public Character(int[] matrix) {
+		this.matrix = matrix;
 	}
-
-	protected abstract int[] getArray();
 
 }
