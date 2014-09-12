@@ -1,7 +1,9 @@
 package eu.mc5zig.particletext.characters;
 
-import org.bukkit.Effect;
+import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
+
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -18,8 +20,8 @@ public class CharacterManager {
 			+ "nopqrstuvwxyz" //
 			+ "0123456789!\"§" //
 			+ "$%&/()[]{}=`´" //
-			+ "?ÜüÄäÖö@€\\#+" //
-			+ "*~'<>|-_.,;:^";
+			+ "?ÜüÄäÖö@€\\#+*" //
+			+ "~'<>|-_.,;:^°";
 
 	public CharacterManager() {
 		setup();
@@ -32,22 +34,33 @@ public class CharacterManager {
 	}
 
 	public void draw(String string, Player player, int distance) {
-		final int defCharacterOff = 2;
+		int defCharacterOff = 2;
+		double scale = 0.08;
+		double charOff = 0.0;
+		for (int i = 0; i < string.length(); i++) {
+			char character = string.charAt(i);
+			int index = characters.indexOf(character);
+			if (index == -1) {
+				charOff += defCharacterOff * 2 * scale;
+				continue;
+			}
+			Sprite sprite = sprites[index];
+			charOff += (double) sprite.getRealWidth() * scale + 2 * scale;
+		}
+
 		Location loc = player.getLocation();
 		loc.setPitch(0.0f);
 		Vector vec = loc.getDirection();
 		vec.multiply(distance);
 		loc.add(vec);
-		loc.add(0, 1, 0);
+		loc.add(0, scale * 16 + 0.5, 0);
 
-		int offset = MathUtils.getOffset(string, defCharacterOff);
-
-		int characterOff = -offset / 2;
+		double characterOff = -charOff / 2;
 		for (int i = 0; i < string.length(); i++) {
 			char character = string.charAt(i);
 			int index = characters.indexOf(character);
 			if (index == -1) {
-				characterOff += defCharacterOff;
+				characterOff += defCharacterOff * 2 * scale;
 				continue;
 			}
 			Sprite sprite = sprites[index];
@@ -59,39 +72,40 @@ public class CharacterManager {
 					int f = MathUtils.getFByYaw(yaw);
 
 					double xl = loc.getX();
-					double yl = loc.getY() - (double) y / 10.0;
+					double yl = loc.getY() - (double) y * scale;
 					double zl = loc.getZ();
 
 					double xp;
 					double zp;
 					switch (f) {
 					case 1:
-						zp = (double) x / 10.0 + characterOff;
+						zp = (double) x * scale + characterOff;
 						l = new Location(loc.getWorld(), xl, yl, zl - zp);
 						break;
 					case 2:
-						xp = (double) x / 10.0 + characterOff;
+						xp = (double) x * scale + characterOff;
 						l = new Location(loc.getWorld(), xl + xp, yl, zl);
 						break;
 					case 3:
-						zp = (double) x / 10.0 + characterOff;
+						zp = (double) x * scale + characterOff;
 						l = new Location(loc.getWorld(), xl, yl, zl + zp);
 						break;
 					case 4:
-						xp = (double) x / 10.0 + characterOff;
+						xp = (double) x * scale + characterOff;
 						l = new Location(loc.getWorld(), xl - xp, yl, zl);
 						break;
 					case 0:
-						xp = (double) x / 10.0 + characterOff;
+						xp = (double) x * scale + characterOff;
 						l = new Location(loc.getWorld(), xl - xp, yl, zl);
 						break;
 					}
 					if (col != -1 && col != 0xffff00ff) {
-						l.getWorld().playEffect(l, Effect.HEART, 0);
+						((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutWorldParticles("fireworksSpark", (float) l.getX(), (float) l.getY(),
+								(float) l.getZ(), 0.0f, 0.0f, 0.0f, 0.0f, 0));
 					}
 				}
 			}
-			characterOff += defCharacterOff;
+			characterOff += (double) sprite.getRealWidth() * scale + 2 * scale;
 		}
 	}
 }

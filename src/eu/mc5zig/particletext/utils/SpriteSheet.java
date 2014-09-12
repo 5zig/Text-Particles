@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import net.minecraft.util.org.apache.commons.io.FileUtils;
+
 public class SpriteSheet {
 
 	private String path;

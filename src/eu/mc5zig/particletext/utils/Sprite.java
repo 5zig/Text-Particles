@@ -19,4 +19,17 @@ public class Sprite {
 		return height;
 	}
 
+	public int getRealWidth() {
+		int c = 0;
+		for (int x = 1; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				int col = pixels[x + y * width];
+				if (col == -1 || col == 0xffff00ff) c++;
+			}
+			if (c == height) return x;
+			c = 0;
+		}
+		return width;
+	}
+
 }

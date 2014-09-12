@@ -18,7 +18,7 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-
+		
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class Main extends JavaPlugin {
 					for (int i = 0; i < args.length - 1; i++)
 						sb.append(args[i] + " ");
 					sb.append(args[args.length - 1]);
-					characterManager.draw(sb.toString(), player, 10);
+					characterManager.draw(sb.toString(), player, 8);
 				}
 			}
 		}
