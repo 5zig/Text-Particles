@@ -2,6 +2,7 @@ package eu.mc5zig.particletext;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import eu.mc5zig.particletext.characters.CharacterManager;
@@ -22,8 +23,8 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("test")) {
-			characterManager.draw("test");
+		if (cmd.getName().equalsIgnoreCase("TEST")) {
+			characterManager.draw("test", (Player) sender);
 		}
 		return false;
 	}

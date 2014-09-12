@@ -42,7 +42,7 @@ public class SpriteSheet {
 				int[] pixels = new int[size * size];
 				for (int xx = 0; xx < size; xx++) {
 					for (int yy = 0; yy < size; yy++) {
-						pixels[xx + yy * size] = this.pixels[x * xx + y * yy * width];
+						pixels[xx + yy * size] = this.pixels[x + xx + (y + yy) * width];
 					}
 				}
 				res[index++] = new Sprite(pixels, size, size);
