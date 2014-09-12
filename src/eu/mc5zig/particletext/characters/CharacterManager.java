@@ -5,14 +5,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import eu.mc5zig.particletext.Main;
 import eu.mc5zig.particletext.utils.MathUtils;
 import eu.mc5zig.particletext.utils.Sprite;
 import eu.mc5zig.particletext.utils.SpriteSheet;
 
 public class CharacterManager {
-
-	private Main plugin;
 
 	private Sprite[] sprites;
 	private String characters = "ABCDEFGHIJKLM" //
@@ -24,9 +21,7 @@ public class CharacterManager {
 			+ "?ÜüÄäÖö@€\\#+" //
 			+ "*~'<>|-_.,;:^";
 
-	public CharacterManager(Main plugin) {
-		this.plugin = plugin;
-
+	public CharacterManager() {
 		setup();
 	}
 

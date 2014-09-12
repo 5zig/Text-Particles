@@ -13,7 +13,7 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		characterManager = new CharacterManager(this);
+		characterManager = new CharacterManager();
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class Main extends JavaPlugin {
 					for (int i = 0; i < args.length - 1; i++)
 						sb.append(args[i] + " ");
 					sb.append(args[args.length - 1]);
-					characterManager.draw(sb.toString(), player, 5);
+					characterManager.draw(sb.toString(), player, 10);
 				}
 			}
 		}
