@@ -1,4 +1,4 @@
-package eu.mc5zig.textparticle.utils;
+package eu.mc5zig.textparticle.characters;
 
 public class Sprite {
 

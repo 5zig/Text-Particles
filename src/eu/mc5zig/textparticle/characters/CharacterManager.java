@@ -11,8 +11,6 @@ import org.bukkit.util.Vector;
 
 import eu.mc5zig.textparticle.utils.FileUtils;
 import eu.mc5zig.textparticle.utils.MathUtils;
-import eu.mc5zig.textparticle.utils.Sprite;
-import eu.mc5zig.textparticle.utils.SpriteSheet;
 import eu.mc5zig.textparticles.TextParticles;
 
 public class CharacterManager {
