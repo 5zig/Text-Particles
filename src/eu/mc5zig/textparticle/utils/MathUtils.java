@@ -1,4 +1,4 @@
-package eu.mc5zig.particletext.utils;
+package eu.mc5zig.textparticle.utils;
 
 public class MathUtils {
 

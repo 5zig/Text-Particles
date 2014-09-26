@@ -1,17 +1,17 @@
-package eu.mc5zig.particletext;
+package eu.mc5zig.textparticles;
 
 import java.util.logging.Level;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import eu.mc5zig.particletext.characters.CharacterManager;
-import eu.mc5zig.particletext.utils.TPLogger;
+import eu.mc5zig.textparticle.characters.CharacterManager;
+import eu.mc5zig.textparticle.utils.TPLogger;
 
-public class Main extends JavaPlugin {
+public class TextParticles extends JavaPlugin {
 
 	private static TPLogger logger;
 
-	private CharacterManager characterManager;
+	private static CharacterManager characterManager;
 
 	@Override
 	public void onEnable() {
@@ -25,7 +25,7 @@ public class Main extends JavaPlugin {
 
 	}
 
-	public CharacterManager getManager() {
+	public static CharacterManager getManager() {
 		return characterManager;
 	}
 

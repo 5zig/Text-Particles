@@ -1,4 +1,4 @@
-package eu.mc5zig.particletext.utils;
+package eu.mc5zig.textparticle.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import eu.mc5zig.particletext.Main;
+import eu.mc5zig.textparticles.TextParticles;
 
 public class SpriteSheet {
 
@@ -21,7 +21,7 @@ public class SpriteSheet {
 	}
 
 	private void load() {
-		Main.logger().info("Loading SpriteSheet in " + path);
+		TextParticles.logger().info("Loading SpriteSheet in " + path);
 		try {
 			BufferedImage image = ImageIO.read(path);
 			this.width = image.getWidth();
@@ -29,7 +29,7 @@ public class SpriteSheet {
 			this.size = width > height ? width : height;
 			this.pixels = new int[width * height];
 			image.getRGB(0, 0, width, height, pixels, 0, size);
-			Main.logger().info("Loaded SpriteSheet in " + path);
+			TextParticles.logger().info("Loaded SpriteSheet in " + path);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Could not load SpriteSheet in " + path);

@@ -1,4 +1,4 @@
 name: TextParticles
 version: 1.0
-main: eu.mc5zig.particletext.Main
+main: eu.mc5zig.textparticles.TextParticles
 author: 5zig

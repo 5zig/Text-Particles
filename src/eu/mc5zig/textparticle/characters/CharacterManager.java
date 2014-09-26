@@ -1,4 +1,4 @@
-package eu.mc5zig.particletext.characters;
+package eu.mc5zig.textparticle.characters;
 
 import java.io.File;
 
@@ -9,15 +9,15 @@ import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import eu.mc5zig.particletext.Main;
-import eu.mc5zig.particletext.utils.FileUtils;
-import eu.mc5zig.particletext.utils.MathUtils;
-import eu.mc5zig.particletext.utils.Sprite;
-import eu.mc5zig.particletext.utils.SpriteSheet;
+import eu.mc5zig.textparticle.utils.FileUtils;
+import eu.mc5zig.textparticle.utils.MathUtils;
+import eu.mc5zig.textparticle.utils.Sprite;
+import eu.mc5zig.textparticle.utils.SpriteSheet;
+import eu.mc5zig.textparticles.TextParticles;
 
 public class CharacterManager {
 
-	private Main plugin;
+	private TextParticles plugin;
 	private File spriteSheet;
 	private Sprite[] sprites;
 	private String characters = "ABCDEFGHIJKLM" //
@@ -29,7 +29,7 @@ public class CharacterManager {
 			+ "?ÜüÄäÖö@€\\#+*" //
 			+ "~'<>|-_.,;:^°";
 
-	public CharacterManager(Main plugin) {
+	public CharacterManager(TextParticles plugin) {
 		this.plugin = plugin;
 		setup();
 	}
@@ -38,13 +38,13 @@ public class CharacterManager {
 		if (!plugin.getDataFolder().exists()) plugin.getDataFolder().mkdir();
 		spriteSheet = new File(plugin.getDataFolder(), "text.png");
 		if (!spriteSheet.exists()) {
-			Main.logger().info("SpriteSheet not found! Creating new one!");
+			TextParticles.logger().info("SpriteSheet not found! Creating new one!");
 			if (!FileUtils.copyFile("/text.png", spriteSheet)) {
-				Main.logger().servere("Could not create new SpriteSheet!");
-				Main.logger().warn("Disabling plugin!");
+				TextParticles.logger().servere("Could not create new SpriteSheet!");
+				TextParticles.logger().warn("Disabling plugin!");
 				plugin.getPluginLoader().disablePlugin(plugin);
 			} else {
-				Main.logger().info("Created new SpriteSheet!");
+				TextParticles.logger().info("Created new SpriteSheet!");
 			}
 		}
 		SpriteSheet sheet = new SpriteSheet(spriteSheet);
