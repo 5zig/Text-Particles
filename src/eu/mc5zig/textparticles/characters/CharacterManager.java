@@ -1,4 +1,4 @@
-package eu.mc5zig.textparticle.characters;
+package eu.mc5zig.textparticles.characters;
 
 import java.io.File;
 
@@ -9,9 +9,9 @@ import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import eu.mc5zig.textparticle.utils.FileUtils;
-import eu.mc5zig.textparticle.utils.MathUtils;
 import eu.mc5zig.textparticles.TextParticles;
+import eu.mc5zig.textparticles.utils.FileUtils;
+import eu.mc5zig.textparticles.utils.MathUtils;
 
 public class CharacterManager {
 

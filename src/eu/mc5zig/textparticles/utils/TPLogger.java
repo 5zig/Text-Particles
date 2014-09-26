@@ -1,4 +1,4 @@
-package eu.mc5zig.textparticle.utils;
+package eu.mc5zig.textparticles.utils;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

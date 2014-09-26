@@ -1,4 +1,4 @@
-package eu.mc5zig.textparticle.characters;
+package eu.mc5zig.textparticles.characters;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

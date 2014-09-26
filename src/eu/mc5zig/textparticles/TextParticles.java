@@ -4,8 +4,8 @@ import java.util.logging.Level;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import eu.mc5zig.textparticle.characters.CharacterManager;
-import eu.mc5zig.textparticle.utils.TPLogger;
+import eu.mc5zig.textparticles.characters.CharacterManager;
+import eu.mc5zig.textparticles.utils.TPLogger;
 
 public class TextParticles extends JavaPlugin {
 
