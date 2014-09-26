@@ -1,5 +1,7 @@
 package eu.mc5zig.particletext.characters;
 
+import java.io.File;
+
 import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
 
 import org.bukkit.Location;
@@ -7,12 +9,16 @@ import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import eu.mc5zig.particletext.Main;
+import eu.mc5zig.particletext.utils.FileUtils;
 import eu.mc5zig.particletext.utils.MathUtils;
 import eu.mc5zig.particletext.utils.Sprite;
 import eu.mc5zig.particletext.utils.SpriteSheet;
 
 public class CharacterManager {
 
+	private Main plugin;
+	private File spriteSheet;
 	private Sprite[] sprites;
 	private String characters = "ABCDEFGHIJKLM" //
 			+ "NOPQRSTUVWXYZ" //
@@ -23,22 +29,48 @@ public class CharacterManager {
 			+ "?ÜüÄäÖö@€\\#+*" //
 			+ "~'<>|-_.,;:^°";
 
-	public CharacterManager() {
+	public CharacterManager(Main plugin) {
+		this.plugin = plugin;
 		setup();
 	}
 
 	private void setup() {
-		SpriteSheet sheet = new SpriteSheet("/text.png");
+		if (!plugin.getDataFolder().exists()) plugin.getDataFolder().mkdir();
+		spriteSheet = new File(plugin.getDataFolder(), "text.png");
+		if (!spriteSheet.exists()) {
+			Main.logger().info("SpriteSheet not found! Creating new one!");
+			if (!FileUtils.copyFile("/text.png", spriteSheet)) {
+				Main.logger().servere("Could not create new SpriteSheet!");
+				Main.logger().warn("Disabling plugin!");
+				plugin.getPluginLoader().disablePlugin(plugin);
+			} else {
+				Main.logger().info("Created new SpriteSheet!");
+			}
+		}
+		SpriteSheet sheet = new SpriteSheet(spriteSheet);
 		Sprite[] sprites = sheet.split(16);
 		this.sprites = sprites;
 	}
 
-	public void draw(String string, Player player, int distance) {
+	public void draw(Player player, String message) {
+		draw(player, message, 8);
+	}
+
+	public void draw(Player player, String message, int distance) {
+		if (player == null) {
+			throw new IllegalArgumentException("Player cannot be null!");
+		}
+		if (message == null || message.isEmpty()) {
+			throw new IllegalArgumentException("Message can't be empty or null!");
+		}
+		if (characters == null) {
+			throw new RuntimeException("Could not draw Text onto screen!");
+		}
 		int defCharacterOff = 2;
 		double scale = 0.08;
 		double charOff = 0.0;
-		for (int i = 0; i < string.length(); i++) {
-			char character = string.charAt(i);
+		for (int i = 0; i < message.length(); i++) {
+			char character = message.charAt(i);
 			int index = characters.indexOf(character);
 			if (index == -1) {
 				charOff += defCharacterOff * 2 * scale;
@@ -56,8 +88,8 @@ public class CharacterManager {
 		loc.add(0, scale * 16 + 0.5, 0);
 
 		double characterOff = -charOff / 2;
-		for (int i = 0; i < string.length(); i++) {
-			char character = string.charAt(i);
+		for (int i = 0; i < message.length(); i++) {
+			char character = message.charAt(i);
 			int index = characters.indexOf(character);
 			if (index == -1) {
 				characterOff += defCharacterOff * 2 * scale;

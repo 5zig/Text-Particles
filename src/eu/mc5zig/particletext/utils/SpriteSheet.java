@@ -1,34 +1,35 @@
 package eu.mc5zig.particletext.utils;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import net.minecraft.util.org.apache.commons.io.FileUtils;
+import eu.mc5zig.particletext.Main;
 
 public class SpriteSheet {
 
-	private String path;
+	private File path;
 	private int[] pixels;
 	private int width, height;
 	private int size;
 
-	public SpriteSheet(String path) {
+	public SpriteSheet(File path) {
 		this.path = path;
 		load();
 	}
 
 	private void load() {
-		System.out.println("Loading SpriteSheet in " + path);
+		Main.logger().info("Loading SpriteSheet in " + path);
 		try {
-			BufferedImage image = ImageIO.read(SpriteSheet.class.getResource(path));
+			BufferedImage image = ImageIO.read(path);
 			this.width = image.getWidth();
 			this.height = image.getHeight();
 			this.size = width > height ? width : height;
 			this.pixels = new int[width * height];
 			image.getRGB(0, 0, width, height, pixels, 0, size);
-			System.out.println("Loaded SpriteSheet in " + path);
+			Main.logger().info("Loaded SpriteSheet in " + path);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Could not load SpriteSheet in " + path);
