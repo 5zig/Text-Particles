@@ -12,6 +12,10 @@ public class MathUtils {
 		}
 		return Math.round(f);
 	}
+	
+	public static float getYawByF(int f) {
+		return f * 360.0f / 4.0f;
+	}
 
 	public static int getOffset(String string, int characterOff) {
 		return string.length() * characterOff;

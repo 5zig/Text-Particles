@@ -84,7 +84,7 @@ public class CharacterManager {
 
 		Location loc = player.getLocation();
 		loc.setPitch(0.0f);
-		loc.setYaw(0.0f);
+		loc.setYaw(MathUtils.getYawByF(MathUtils.getFByYaw(loc.getYaw())));
 		Vector vec = loc.getDirection();
 		vec.multiply(distance);
 		loc.add(vec);
