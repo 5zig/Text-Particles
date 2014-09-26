@@ -87,7 +87,7 @@ public class CharacterManager {
 		Vector vec = loc.getDirection();
 		vec.multiply(distance);
 		loc.add(vec);
-		loc.add(0, scale * 16 + 0.5, 0);
+		loc.add(0, scale * 16, 0);
 
 		double characterOff = -charOff / 2;
 		for (int i = 0; i < message.length(); i++) {
