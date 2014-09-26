@@ -50,11 +50,15 @@ public class CharacterManager {
 		this.sprites = sprites;
 	}
 
-	public void draw(Player player, String message) {
-		draw(player, message, 8);
+	public void draw(String message, Player player) {
+		draw(message, player, 8);
 	}
 
-	public void draw(Player player, String message, int distance) {
+	public void draw(String message, Player... players) {
+		for (Player player : players) draw(message, player);
+	}
+	
+	public void draw(String message, Player player, int distance) {
 		if (player == null) {
 			throw new IllegalArgumentException("Player cannot be null!");
 		}
